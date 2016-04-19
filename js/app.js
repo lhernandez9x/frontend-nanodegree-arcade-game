@@ -1,11 +1,31 @@
+'use strict';
+
+// Sets the speed variable
+var speed = {
+    'fast': 300,
+    'fastNormal': 250,
+    'normal': 200,
+    'normalSlow': 150,
+    'slow': 100
+}
+
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    console.log(this.speed);
+};
+
+Enemy.prototype.reset = function() {
+    if (this.x > 510) {
+        this.x = -200;
+    }
 };
 
 // Update the enemy's position, required method for game
@@ -14,6 +34,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x = this.x + this.speed * dt;
+    this.reset();
 };
 
 // Draw the enemy on the screen, required method for game
@@ -86,9 +108,26 @@ Player.prototype.handleInput = function(keyCode) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies = [new Enemy()];
+var allEnemies = [new Enemy(-100, 220, speed.slow), new Enemy(-100, 140, speed.fast), new Enemy(-100, 60, speed.normal)];
 var player = new Player();
 
+(function pushEnemy() {
+    function enemyPush(){
+            var secondEnemies = [new Enemy(-300, 220, speed.fastNormal), new Enemy(-100, 140, speed.normalSlow), new Enemy(-200, 60, speed.slow)];
+
+            for (let i = 0; i < secondEnemies.length; i++) {
+            allEnemies.push(secondEnemies[i]);
+            }
+        }
+        var pushTimeout = setTimeout(enemyPush, 3500);
+})();
+
+
+// This will allow to get random index from positionY Array
+
+function getRandomInt(min, max) {
+    return min + Math.floor(Math.random() * (max - min + 1));
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
