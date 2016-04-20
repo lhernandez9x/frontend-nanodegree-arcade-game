@@ -2,10 +2,10 @@
 
 // Sets the speed variable
 var speed = {
-    'fast': 300,
-    'fastNormal': 250,
-    'normal': 200,
-    'normalSlow': 150,
+    'fast': 200,
+    'fastNormal': 175,
+    'normal': 150,
+    'normalSlow': 125,
     'slow': 100
 }
 
@@ -51,6 +51,8 @@ Enemy.prototype.render = function() {
 var Player = function() {
     this.x = 200;
     this.y = 380;
+    this.height = 75;
+    this.width = 66;
     this.sprite = 'images/char-boy.png';
 
 };
@@ -67,6 +69,7 @@ Player.prototype.render = function() {
 Player.prototype.reset = function(){
     if (this.y <= 0){
         this.y = 380;
+        console.log('Touchdown!!');
     }
 };
 
@@ -102,6 +105,22 @@ Player.prototype.handleInput = function(keyCode) {
             break;
         default:
     }
+};
+
+// Checking collision between Player and allEnemies
+
+function checkCollisions(){
+    var badGuy;
+    for (let i = 0; i < allEnemies.length; i++){
+        badGuy = allEnemies[i];
+        badGuy.width = 50;
+        badGuy.height = 40;
+        if (player.x < badGuy.x + badGuy.width && player.x + player.width > badGuy.x && player.y < badGuy.y + badGuy.height && player.y + player.height > badGuy.y){
+            player.x = 200;
+            player.y = 380;
+        }
+    }
+    return false;
 };
 
 // Now instantiate your objects.
