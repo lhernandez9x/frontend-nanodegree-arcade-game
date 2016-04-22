@@ -7,7 +7,7 @@ var speed = {
     'normal': 150,
     'normalSlow': 125,
     'slow': 100
-}
+};
 
 // Enemies our player must avoid
 var Enemy = function(x, y, speed) {
@@ -19,7 +19,6 @@ var Enemy = function(x, y, speed) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    console.log(this.speed);
 };
 
 Enemy.prototype.reset = function() {
@@ -48,30 +47,58 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 // Player Class
-var Player = function() {
-    this.x = 200;
-    this.y = 380;
+var Player = function(x, y, points) {
+    this.x = x;
+    this.y = y;
     this.height = 75;
     this.width = 66;
+    this.points = points;
     this.sprite = 'images/char-boy.png';
+    this.scoreboard();
 
 };
 
-Player.prototype.update = function(dt) {
-        this.reset();
+// This logs score everytime player hits water
 
+/*Player.prototype.score = function(){
+    if (this.y <= 0){
+        this.points = this.points + 50;
+    }
+    return this.points;
+    console.log(this.points);
+}*/
+
+Player.prototype.scoreboard = function(){
+    var scoreboard = '<div id="hud"><h2 class="score">Score: 0</h2></div>';
+$('body').append(scoreboard);
+};
+
+
+// Player Update and Render functions
+Player.prototype.update = function(dt) {
+    this.reset();
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
 };
+
+// This reests player position when player reaches water
 
 Player.prototype.reset = function(){
     if (this.y <= 0){
         this.y = 380;
-        console.log('Touchdown!!');
+        this.points = this.points + 50;
     }
+    if ( checkCollisions()){
+        this.points= this.points - 50;
+    }
+        document.getElementById('hud').innerHTML = '<h2 class="score">Score: ' + this.points + '</h2>';
 };
+
+
+// This handles the input for the player motion and controls player from c=going out of bounds
 
 Player.prototype.handleInput = function(keyCode) {
     switch (keyCode) {
@@ -111,35 +138,37 @@ Player.prototype.handleInput = function(keyCode) {
 
 function checkCollisions(){
     var badGuy;
-    for (let i = 0; i < allEnemies.length; i++){
+    for (var i = 0; i < allEnemies.length; i++){
         badGuy = allEnemies[i];
         badGuy.width = 50;
         badGuy.height = 40;
         if (player.x < badGuy.x + badGuy.width && player.x + player.width > badGuy.x && player.y < badGuy.y + badGuy.height && player.y + player.height > badGuy.y){
             player.x = 200;
             player.y = 380;
+            player.points= player.points - 50;
         }
     }
     return false;
-};
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
 var allEnemies = [new Enemy(-100, 220, speed.slow), new Enemy(-100, 140, speed.fast), new Enemy(-100, 60, speed.normal)];
-var player = new Player();
+var player = new Player(200, 380, 0);
 
 (function pushEnemy() {
     function enemyPush(){
             var secondEnemies = [new Enemy(-300, 220, speed.fastNormal), new Enemy(-100, 140, speed.normalSlow), new Enemy(-200, 60, speed.slow)];
 
-            for (let i = 0; i < secondEnemies.length; i++) {
+            for (var i = 0; i < secondEnemies.length; i++) {
             allEnemies.push(secondEnemies[i]);
             }
         }
         var pushTimeout = setTimeout(enemyPush, 3500);
 })();
+
 
 
 // This will allow to get random index from positionY Array
