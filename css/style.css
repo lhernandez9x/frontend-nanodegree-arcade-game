@@ -1,12 +1,64 @@
 body {
-    background-color: forestgreen;
+    background: url(../images/bg.png);
+    font-family: 'Berkshire Swash', cursive;
     text-align: center;
+    max-height: 100vh;
+    max-width:100%;
 }
 
-.score {
-    font-size: 1.5em;
-    font-family: 'Berkshire Swash', cursive;
-    text-align: left;
-    width:50%;
-    padding: 0 5% ;
+/* Score and Lives Display */
+#hud {
+    background: #27ae60;
+    width: 100%;
 }
+.score,
+.lives{
+    font-size: 2em;
+    color:#fff;
+    text-shadow: 5px 0 5px #323232;
+    padding: 1% 20% ;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+/* Win and Lose Buttons */
+
+.won,
+.lost {
+    width: 40%;
+    padding: 1% 2%;
+    box-shadow: 0px 0px 100px #000;
+    position: absolute;
+    top:35%;
+    left:28%;
+}
+
+.won{
+    background: #2ecc71;
+}
+
+.lost{
+    background: #c0392b;
+}
+
+input{
+    font-size: 24px;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+#playAgain {
+    background-color: #3498db;
+    color: #fff;
+    border:solid 2px #2980b9;
+}
+
+#retry{
+    background-color: #34495e;
+    color: #fff;
+    border:solid 2px #2c3e50;
+}
+
+

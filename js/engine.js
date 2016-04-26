@@ -80,7 +80,6 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -95,6 +94,9 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        gems.forEach(function(gems){
+            gems.update(dt);
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -152,6 +154,10 @@ var Engine = (function(global) {
         });
 
         player.render();
+
+        gems.forEach(function(gems){
+            gems.render();
+        });
     }
 
     /* This function does nothing but it could have been a good place to
@@ -159,7 +165,7 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -171,7 +177,17 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/GemBlue.png',
+        'images/GemGreen.png',
+        'images/GemOrange.png',
+        'images/Heart.png',
+        'images/Heart-gray.png',
+        'images/char-cat-girl.png',
+        'images/char-princess-girl.png',
+        'images/Key.png',
+        'images/Rock.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 
