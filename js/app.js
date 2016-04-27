@@ -1,5 +1,7 @@
 'use strict';
 
+
+//Sets Global Variables
 // Sets the speed variable
 var speed = {
     'fast': 200,
@@ -15,7 +17,7 @@ var blueGem = 'images/GemBlue.png',
     orangeGem = 'images/GemOrange.png';
 
 // This creates Gem Class
-var Gem = function(x, y, speed, sprite){
+var Gem = function(x, y, speed, sprite) {
     this.x = x;
     this.y = y;
     this.speed = speed;
@@ -31,7 +33,7 @@ Gem.prototype.reset = function() {
 
 //This monitors Gem movement and
 //resets once it reaches off screen on right side
-Gem.prototype.update = function(dt){
+Gem.prototype.update = function(dt) {
     this.x = this.x + this.speed * dt;
     this.reset();
 };
@@ -101,8 +103,8 @@ Player.prototype.render = function() {
 // This resets player position when player reaches water and adds points
 // and removes points  and life when player collides with enemy
 
-Player.prototype.score = function(){
-    if (this.y <= 0){
+Player.prototype.score = function() {
+    if (this.y <= 0) {
         this.y = 380;
         this.points = this.points + 50;
     }
@@ -110,26 +112,26 @@ Player.prototype.score = function(){
 };
 
 // Rules for game end
-Player.prototype.gameEnd = function(){
+Player.prototype.gameEnd = function() {
     //This sets player win
-    if(this.points >= 2500){
-        document.getElementById('gameEnd').innerHTML = '<h2 class="won">You won! Unfortunately the Princess is in another castle.(J/K there is no princess) But go ahead and try again.<br><input type="button" id="playAgain" value="Play Again"></h2>';
+    if (this.points >= 2500) {
+        document.getElementById('gameEnd').innerHTML = '<h2 class="won">You won! Unfortunately the Princess is in another castle.(J/K there is no princess) But go ahead and play again.<br><input type="button" id="playAgain" value="Play Again"></h2>';
         this.y = 380;
         this.x = 200;
         this.points = 0;
-        this.lives = 5;
-        document.getElementById('playAgain').addEventListener('click', function retryPlay(){
+        this.lives = 3;
+        document.getElementById('playAgain').addEventListener('click', function retryPlay() {
             document.getElementById('gameEnd').innerHTML = '';
         })
     }
 
     //This sets player death
-    if(this.lives == 0){
-        document.getElementById('gameEnd').innerHTML = '<h2 class="lost">You died a painfull, simulated death. :( You can try again if you dare.<br><input type="button" id="retry" value="Retry"></h2>';
+    if (this.lives == 0) {
+        document.getElementById('gameEnd').innerHTML = '<h2 class="lost">Ouch! You died from a bug bite.  :(  Try again and beat these bugs.<br><input type="button" id="retry" value="Retry"></h2>';
         this.y = 380;
         this.points = 0;
-        this.lives = 5;
-        document.getElementById('retry').addEventListener('click', function retryPlay(){
+        this.lives = 3;
+        document.getElementById('retry').addEventListener('click', function retryPlay() {
             document.getElementById('gameEnd').innerHTML = '';
         })
 
@@ -175,13 +177,13 @@ Player.prototype.handleInput = function(keyCode) {
 
 // Checking collision between Player, allEnemies, and Gems
 
-function enemyCollisions(){
+function enemyCollisions() {
     var badGuy;
-    for (var i = 0; i < allEnemies.length; i++){
+    for (var i = 0; i < allEnemies.length; i++) {
         badGuy = allEnemies[i];
         badGuy.width = 50;
         badGuy.height = 40;
-        if (player.x < badGuy.x + badGuy.width && player.x + player.width > badGuy.x && player.y < badGuy.y + badGuy.height && player.y + player.height > badGuy.y){
+        if (player.x < badGuy.x + badGuy.width && player.x + player.width > badGuy.x && player.y < badGuy.y + badGuy.height && player.y + player.height > badGuy.y) {
             player.x = 200;
             player.y = 380;
             player.points = player.points - 50;
@@ -191,28 +193,28 @@ function enemyCollisions(){
     return false;
 }
 
-function gemCollisions(){
+function gemCollisions() {
     var bonusGems;
-    for (var i = 0; i < gems.length; i++){
+    for (var i = 0; i < gems.length; i++) {
         bonusGems = gems[i];
         bonusGems.width = 50;
         bonusGems.height = 40;
 
         // Collision with blue gems.
         // Blue gems give 200 points.
-        if (player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y && bonusGems.sprite == blueGem){
+        if (player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y && bonusGems.sprite == blueGem) {
             player.points = player.points + 200;
             bonusGems.x = -500;
         }
         // Collision with green gems.
         // Blue gems give 100 points.
-        if (player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y && bonusGems.sprite == greenGem){
+        if (player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y && bonusGems.sprite == greenGem) {
             player.points = player.points + 100;
             bonusGems.x = -500;
         }
         // Collision with orange gems.
         // Blue gems give 150 points.
-        if (player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y && bonusGems.sprite == orangeGem){
+        if (player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y && bonusGems.sprite == orangeGem) {
             player.points = player.points + 150;
             bonusGems.x = -500;
         }
@@ -224,17 +226,17 @@ function gemCollisions(){
 
 var allEnemies = [new Enemy(-100, 220, speed.slow), new Enemy(-100, 140, speed.fast), new Enemy(-100, 60, speed.normal)];
 var gems = [new Gem(-1000, 60, speed.normal, blueGem), new Gem(-200, 140, speed.fastNormal, greenGem), new Gem(-400, 220, speed.fast, orangeGem)];
-var player = new Player(200, 380, 0, 5);
+var player = new Player(200, 380, 0, 3);
 
 (function pushEnemy() {
-    function enemyPush(){
-            var secondEnemies = [new Enemy(-300, 220, speed.fastNormal), new Enemy(-100, 140, speed.normalSlow), new Enemy(-200, 60, speed.slow)];
+    function enemyPush() {
+        var secondEnemies = [new Enemy(-300, 220, speed.fastNormal), new Enemy(-100, 140, speed.normalSlow), new Enemy(-200, 60, speed.slow)];
 
-            for (var i = 0; i < secondEnemies.length; i++) {
+        for (var i = 0; i < secondEnemies.length; i++) {
             allEnemies.push(secondEnemies[i]);
-            }
         }
-        var pushTimeout = setTimeout(enemyPush, 2500);
+    }
+    var pushTimeout = setTimeout(enemyPush, 2500);
 })();
 
 
