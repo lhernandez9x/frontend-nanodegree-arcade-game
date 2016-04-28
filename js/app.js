@@ -121,17 +121,17 @@ Player.prototype.gameEnd = function() {
         this.lives = 3;
         document.getElementById('playAgain').addEventListener('click', function retryPlay() {
             document.getElementById('gameEnd').innerHTML = '';
-        })
+        });
     }
     //This sets player death
-    if (this.lives == 0) {
+    if (this.lives === 0) {
         document.getElementById('gameEnd').innerHTML = '<h2 class="lost">Ouch! You died from a bug bite.  :(  Try again and beat these bugs.<br><input type="button" id="retry" value="Retry"></h2>';
         this.y = 380;
         this.points = 0;
         this.lives = 3;
         document.getElementById('retry').addEventListener('click', function retryPlay() {
             document.getElementById('gameEnd').innerHTML = '';
-        })
+        });
 
     }
 };
@@ -140,47 +140,47 @@ Player.prototype.gameEnd = function() {
 
 Player.prototype.checkCollisions = function() {
     // Checks collisions with enemies
-        var badGuy;
-        for (var i = 0; i < allEnemies.length; i++) {
-            badGuy = allEnemies[i];
-            badGuy.width = 50;
-            badGuy.height = 40;
-            if (player.x < badGuy.x + badGuy.width && player.x + player.width > badGuy.x && player.y < badGuy.y + badGuy.height && player.y + player.height > badGuy.y) {
-                player.x = 200;
-                player.y = 380;
-                player.points = player.points - 50;
-                player.lives = player.lives - 1;
-            }
+    var badGuy;
+    for (var i = 0; i < allEnemies.length; i++) {
+        badGuy = allEnemies[i];
+        badGuy.width = 50;
+        badGuy.height = 40;
+        if (player.x < badGuy.x + badGuy.width && player.x + player.width > badGuy.x && player.y < badGuy.y + badGuy.height && player.y + player.height > badGuy.y) {
+            player.x = 200;
+            player.y = 380;
+            player.points = player.points - 50;
+            player.lives = player.lives - 1;
         }
-// Checks collisions with gems
-        var bonusGems;
-        for (var i = 0; i < gems.length; i++) {
-            bonusGems = gems[i];
-            bonusGems.width = 50;
-            bonusGems.height = 40;
-            var playerBoundary = player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y ;
+    }
+    // Checks collisions with gems
+    var bonusGems;
+    for (var j = 0; j < gems.length; j++) {
+        bonusGems = gems[j];
+        bonusGems.width = 50;
+        bonusGems.height = 40;
+        var playerBoundary = player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y;
 
-            // Collision with blue gems.
-            // Blue gems give 200 points.
-            if (playerBoundary && bonusGems.sprite == blueGem) {
-                player.points = player.points + 200;
-                bonusGems.x = -500;
-            }
-            // Collision with green gems.
-            // Blue gems give 100 points.
-            if (playerBoundary && bonusGems.sprite == greenGem) {
-                player.points = player.points + 100;
-                bonusGems.x = -500;
-            }
-            // Collision with orange gems.
-            // Blue gems give 150 points.
-            if (playerBoundary && bonusGems.sprite == orangeGem) {
-                player.points = player.points + 150;
-                bonusGems.x = -500;
-            }
+        // Collision with blue gems.
+        // Blue gems give 200 points.
+        if (playerBoundary && bonusGems.sprite == blueGem) {
+            player.points = player.points + 200;
+            bonusGems.x = -500;
         }
-        return false;
-}
+        // Collision with green gems.
+        // Blue gems give 100 points.
+        if (playerBoundary && bonusGems.sprite == greenGem) {
+            player.points = player.points + 100;
+            bonusGems.x = -500;
+        }
+        // Collision with orange gems.
+        // Blue gems give 150 points.
+        if (playerBoundary && bonusGems.sprite == orangeGem) {
+            player.points = player.points + 150;
+            bonusGems.x = -500;
+        }
+    }
+    return false;
+};
 
 
 // This handles the input for the player motion and controls player from c=going out of bounds
