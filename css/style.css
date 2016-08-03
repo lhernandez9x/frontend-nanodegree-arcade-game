@@ -5,6 +5,11 @@ body {
     max-height: 100vh;
     max-width:100%;
 }
+@media only screen and (max-width:680px){
+    canvas{
+        width:100%;
+    }
+}
 
 /* Score and Lives Display */
 #hud {
