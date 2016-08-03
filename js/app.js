@@ -10,6 +10,7 @@ var speed = {
     'normalSlow': 125,
     'slow': 100
 };
+
 var tileWidth = 83,
     tileHeight = 101;
 
@@ -189,28 +190,28 @@ Player.prototype.checkCollisions = function() {
 
 Player.prototype.handleInput = function(keyCode) {
     switch (keyCode) {
-        case 'left':
+        case 'left'|| 'swipeleft':
             if (this.x > 0) {
                 this.x = this.x - tileHeight;
             } else {
                 this.x = this.x;
             }
             break;
-        case 'right':
+        case 'right''swiperight':
             if (this.x < 400) {
                 this.x = this.x + tileHeight;
             } else {
                 this.x = this.x;
             }
             break;
-        case 'up':
+        case 'up'||'swipeup':
             if (this.y > 0) {
                 this.y = this.y - tileWidth;
             } else {
                 this.y = this.y;
             }
             break;
-        case 'down':
+        case 'down'||'swipedown':
             if (this.y < 350) {
                 this.y = this.y + tileWidth;
             } else {
