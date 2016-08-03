@@ -11,6 +11,9 @@ var speed = {
     'slow': 100
 };
 
+var tileWidth = 83,
+    tileHeight = 101;
+
 // Gem variables
 var blueGem = 'images/GemBlue.png',
     greenGem = 'images/GemGreen.png',
@@ -121,17 +124,17 @@ Player.prototype.gameEnd = function() {
         this.lives = 3;
         document.getElementById('playAgain').addEventListener('click', function retryPlay() {
             document.getElementById('gameEnd').innerHTML = '';
-        })
+        });
     }
     //This sets player death
-    if (this.lives == 0) {
+    if (this.lives === 0) {
         document.getElementById('gameEnd').innerHTML = '<h2 class="lost">Ouch! You died from a bug bite.  :(  Try again and beat these bugs.<br><input type="button" id="retry" value="Retry"></h2>';
         this.y = 380;
         this.points = 0;
         this.lives = 3;
         document.getElementById('retry').addEventListener('click', function retryPlay() {
             document.getElementById('gameEnd').innerHTML = '';
-        })
+        });
 
     }
 };
@@ -140,77 +143,77 @@ Player.prototype.gameEnd = function() {
 
 Player.prototype.checkCollisions = function() {
     // Checks collisions with enemies
-        var badGuy;
-        for (var i = 0; i < allEnemies.length; i++) {
-            badGuy = allEnemies[i];
-            badGuy.width = 50;
-            badGuy.height = 40;
-            if (player.x < badGuy.x + badGuy.width && player.x + player.width > badGuy.x && player.y < badGuy.y + badGuy.height && player.y + player.height > badGuy.y) {
-                player.x = 200;
-                player.y = 380;
-                player.points = player.points - 50;
-                player.lives = player.lives - 1;
-            }
+    var badGuy;
+    for (var i = 0; i < allEnemies.length; i++) {
+        badGuy = allEnemies[i];
+        badGuy.width = 50;
+        badGuy.height = 40;
+        if (this.x < badGuy.x + badGuy.width && this.x + this.width > badGuy.x && this.y < badGuy.y + badGuy.height && this.y + this.height > badGuy.y) {
+            this.x = 200;
+            this.y = 380;
+            this.points = this.points - 50;
+            this.lives = this.lives - 1;
         }
-// Checks collisions with gems
-        var bonusGems;
-        for (var i = 0; i < gems.length; i++) {
-            bonusGems = gems[i];
-            bonusGems.width = 50;
-            bonusGems.height = 40;
-            var playerBoundary = player.x < bonusGems.x + bonusGems.width && player.x + player.width > bonusGems.x && player.y < bonusGems.y + bonusGems.height && player.y + player.height > bonusGems.y ;
+    }
+    // Checks collisions with gems
+    var bonusGems;
+    for (var j = 0; j < gems.length; j++) {
+        bonusGems = gems[j];
+        bonusGems.width = 50;
+        bonusGems.height = 40;
+        var playerBoundary = this.x < bonusGems.x + bonusGems.width && this.x + this.width > bonusGems.x && this.y < bonusGems.y + bonusGems.height && this.y + this.height > bonusGems.y;
 
-            // Collision with blue gems.
-            // Blue gems give 200 points.
-            if (playerBoundary && bonusGems.sprite == blueGem) {
-                player.points = player.points + 200;
-                bonusGems.x = -500;
-            }
-            // Collision with green gems.
-            // Blue gems give 100 points.
-            if (playerBoundary && bonusGems.sprite == greenGem) {
-                player.points = player.points + 100;
-                bonusGems.x = -500;
-            }
-            // Collision with orange gems.
-            // Blue gems give 150 points.
-            if (playerBoundary && bonusGems.sprite == orangeGem) {
-                player.points = player.points + 150;
-                bonusGems.x = -500;
-            }
+        // Collision with blue gems.
+        // Blue gems give 200 points.
+        if (playerBoundary && bonusGems.sprite == blueGem) {
+            this.points = this.points + 200;
+            bonusGems.x = -500;
         }
-        return false;
-}
+        // Collision with green gems.
+        // Blue gems give 100 points.
+        if (playerBoundary && bonusGems.sprite == greenGem) {
+            this.points = this.points + 100;
+            bonusGems.x = -500;
+        }
+        // Collision with orange gems.
+        // Blue gems give 150 points.
+        if (playerBoundary && bonusGems.sprite == orangeGem) {
+            this.points = this.points + 150;
+            bonusGems.x = -500;
+        }
+    }
+    return false;
+};
 
 
 // This handles the input for the player motion and controls player from c=going out of bounds
 
 Player.prototype.handleInput = function(keyCode) {
     switch (keyCode) {
-        case 'left':
+        case 'left'|| 'swipeleft':
             if (this.x > 0) {
-                this.x = this.x - 100;
+                this.x = this.x - tileHeight;
             } else {
                 this.x = this.x;
             }
             break;
-        case 'right':
+        case 'right''swiperight':
             if (this.x < 400) {
-                this.x = this.x + 100;
+                this.x = this.x + tileHeight;
             } else {
                 this.x = this.x;
             }
             break;
-        case 'up':
+        case 'up'||'swipeup':
             if (this.y > 0) {
-                this.y = this.y - 80;
+                this.y = this.y - tileWidth;
             } else {
                 this.y = this.y;
             }
             break;
-        case 'down':
+        case 'down'||'swipedown':
             if (this.y < 350) {
-                this.y = this.y + 80;
+                this.y = this.y + tileWidth;
             } else {
                 this.y = this.y;
             }
@@ -236,14 +239,6 @@ var player = new Player(200, 380, 0, 3);
     }
     var pushTimeout = setTimeout(enemyPush, 2500);
 })();
-
-
-
-// This will allow to get random index from Arrays
-
-function getRandomInt(min, max) {
-    return min + Math.floor(Math.random() * (max - min + 1));
-}
 
 // This listens for key presses
 document.addEventListener('keyup', function(e) {
