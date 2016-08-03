@@ -1,6 +1,6 @@
-#frontend-nanodegree-arcade-game
+#Arcade Game Clone
 
-This game is a remake of the Classic Frogger arcade game. This was made as my 5th project for my [Udacity](http://udacity.com) Frontend Developer Nanodegree.
+This game is a remake of the Classic Frogger arcade game. This was made as my 5th project for my [Udacity](http://udacity.com) Front-end Developer Nanodegree.
 
 ## How to Play
 
