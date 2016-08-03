@@ -197,7 +197,7 @@ Player.prototype.handleInput = function(keyCode) {
                 this.x = this.x;
             }
             break;
-        case 'right''swiperight':
+        case 'right'||'swiperight':
             if (this.x < 400) {
                 this.x = this.x + tileHeight;
             } else {
